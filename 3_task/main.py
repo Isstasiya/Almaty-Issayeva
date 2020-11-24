@@ -31,7 +31,7 @@ class MyWidget(QMainWindow):
         qp.setBrush(QColor(255, 255, 0))
         er = randrange(0, 40)
         for i in range(x):
-            qp.drawRect(randrange(0, 360), randrange(0, 360), er, er)
+            qp.drawRect(70, 70 + 30 * i, 120, 30)
         
 if __name__ == '__main__':
     app = QApplication(sys.argv)
