@@ -125,6 +125,8 @@ class Example(QMainWindow, Ui_Planner):
             event = QLabel(i[1] + "-" + i[0], self)
             self.event.addWidget(event)
 
+    # взаимодействие с событиями
+
     def view_week_event(self):
         cn = self.connection
         cur = cn.cursor()
@@ -158,6 +160,8 @@ class Example(QMainWindow, Ui_Planner):
             self.tsk.clicked.connect(self.did)
             self.task_week.addWidget(self.tsk)
 
+    # взаимодействие с расписанием
+
     def change_shedules(self):
         self.change = Save_lesson()
         self.change.show()
@@ -174,6 +178,8 @@ class Example(QMainWindow, Ui_Planner):
             task = QLabel(self)
             task.setText(i[1] + "-" + i[2])
             self.shedule.addWidget(task)
+
+    # добавление школьного события
 
     def add_a_lesson_event(self):
         self.lesson_event = Lesson_event()
@@ -193,6 +199,8 @@ class Example(QMainWindow, Ui_Planner):
                 self.event_school.setItem(
                     i, j, QTableWidgetItem(str(el)))
         self.table_events.resizeColumnsToContents()
+
+    # показ изображения/текстового документа
 
     def op_img(self):
         for i in reversed(range(self.l_view.count())): 
