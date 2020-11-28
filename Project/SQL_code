@@ -1,0 +1,95 @@
+ 
+REATE TABLE subject(
+   subject_id INTEGER PRIMARY KEY,
+   clas TEXT,
+   subject_name TEXT
+);
+
+
+CREATE TABLE shedule(
+    lesson_id INTEGER PRIMARY KEY,
+    subject_id INTEGER,
+    week_day TEXT,
+    time TEXT,
+    FOREIGN KEY(subject_id) REFERENCES subject(subject_id) ON DELETE CASCADE
+);
+
+CREATE TABLE
+(
+    task_id INTEGER PRIMARY KEY,
+    subject_id INTEGER,
+    deadline TEXT,
+    week_day TEXT,
+    task TEXT,
+    FOREIGN KEY(subject_id) REFERENCES subject(subject_id) ON DELETE CASCADE
+);
+
+INSERT INTO lesson_event(event_id, event, subject_id, date, time)
+
+CREATE TABLE lesson_event(
+    event_id INTEGER PRIMARY KEY,
+    event TEXT,
+    subject_id INTEGER,
+    date TEXT,
+    time TEXT,
+    FOREIGN KEY(subject_id) REFERENCES subject(subject_id) ON DELETE CASCADE
+);
+
+CREATE TABLE dayly_tasks(
+    task_id INTEGER PRIMARY KEY,
+    task TEXT,
+    important INTEGER,
+    date TEXT,
+    deadline TEXT
+);
+
+CREATE TABLE big_tasks(
+    task_id INTEGER PRIMARY KEY,
+    task TEXT,
+    important INTEGER,
+    clas TEXT,
+    deadline TEXT
+);
+
+CREATE TABLE my_event(
+    event_id INTEGER PRIMARY KEY,
+    event TEXT,
+    date TEXT,
+    time TEXT
+);
+
+INSERT INTO subject(subject_name, clas)
+VALUES ('algebra', 'school'),
+       ('physics', 'school'),
+       ('geography', 'school'),
+       ('english', 'school'),
+       ('yandex', 'additional');
+
+INSERT INTO shedule(subject_id, week_day, time)
+VALUES (1, 'saturday', '09:00'),
+       (5, 'saturday', '16:00'),
+       (5, 'tuesday', '16:00');
+
+INSERT INTO shedule(subject_id, week_day, time)
+VALUES (3, 'saturday', '10:00');
+
+
+CREATE INDEX idx_task_id_daily_tasks ON dayly_tasks(task_id);
+CREATE INDEX idx_event_id_my_event ON my_event(event_id);
+
+CREATE VIEW view_shedule(week_day, time, subject)
+AS
+    SELECT sh.week_day, sh.time, s.subject_name
+    FROM shedule sh JOIN subject s on s.subject_id = sh.subject_id;
+
+CREATE VIEW view_lesson_tasks(week_day, deadline, subject, task, clas)
+AS
+    SELECT lt.week_day, lt.deadline, s.subject_name, lt.task, s.clas
+    FROM shedule sh JOIN subject s on s.subject_id = sh.subject_id
+    JOIN lesson_tasks lt on sh.subject_id = lt.subject_id;
+
+CREATE VIEW view_lesson_events(event, subject, date, time)
+AS
+    SELECT le.event, s.subject_name, le.date, le.time
+    FROM lesson_event le JOIN subject s on s.subject_id = le.subject_id
+    ORDER BY le.date, le.time;
